@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Montadoras Disponíveis:</h2>
+<ul>
+  {% for montadora in manufacturers %}
+  </li> {{montadora.name}} </li>
+  {% endfor %}
+</ul>
+{% endblock %}

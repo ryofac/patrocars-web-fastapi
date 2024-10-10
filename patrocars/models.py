@@ -1,8 +1,15 @@
 import uuid
-from datetime import datetime
+from datetime import date, datetime
+from decimal import Decimal
 
-from sqlalchemy import func, types
-from sqlalchemy.orm import DeclarativeBase, Mapped, MappedAsDataclass, mapped_column
+from sqlalchemy import ForeignKey, func, types
+from sqlalchemy.orm import (
+    DeclarativeBase,
+    Mapped,
+    MappedAsDataclass,
+    mapped_column,
+    relationship,
+)
 
 
 class Base(MappedAsDataclass, DeclarativeBase):
@@ -16,7 +23,7 @@ class UUIDModel(Base):
         types.UUID,
         primary_key=True,
         init=False,
-        default="uuid.uuid4",
+        default=uuid.uuid4,
     )
 
 
@@ -29,7 +36,43 @@ class TimestampMixin(Base):
 class CarModel(TimestampMixin, UUIDModel):
     __tablename__ = "car_model"
 
-
-class CarManufacter(TimestampMixin, UUIDModel):
-    __tablename__ = "car_manufacturer"
     name: Mapped[str] = mapped_column(types.String(100))
+    reference_value: Mapped[Decimal] = mapped_column(types.DECIMAL(2))
+    motorization: Mapped[float] = mapped_column(types.Float(1))
+    is_automatic: Mapped[bool]
+    description: Mapped[str] = mapped_column(types.String(255), nullable=True)
+
+    manufacturer_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("manufacturer.id"),
+        nullable=False,
+    )
+
+    manufacturer: Mapped["Manufacturer"] = relationship(
+        "Manufacturer",
+        back_populates="car_models",
+    )
+
+    cars: Mapped[list["Car"]] = relationship("Car", back_populates="car_model")
+
+
+class Car(TimestampMixin, UUIDModel):
+    __tablename__ = "car"
+
+    car_model_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("car_model.id"),
+        nullable=False,
+    )
+    car_model: Mapped["CarModel"] = relationship("CarModel", back_populates="cars")
+
+
+class Manufacturer(TimestampMixin, UUIDModel):
+    __tablename__ = "manufacturer"
+
+    name: Mapped[str] = mapped_column(types.String(100))
+    country: Mapped[str] = mapped_column(types.String(100))
+    foundation_year: Mapped[int]
+
+    car_models: Mapped[list["CarModel"]] = relationship(
+        "CarModel",
+        back_populates="manufacturer",
+    )
