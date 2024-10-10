@@ -1,5 +1,6 @@
 from fastapi import Depends, FastAPI, Request, status
 from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -13,6 +14,7 @@ app = FastAPI(
     redirect_slashes=True,
 )
 
+static = StaticFiles(directory="patrocars/static/")
 templates = Jinja2Templates("patrocars/templates/")
 
 
