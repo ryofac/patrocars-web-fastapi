@@ -4,6 +4,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from patrocars.dependencies import get_manufacturer_repository, templates
 from patrocars.persistence.repositories import ManufacturerRepository
+from patrocars.routers.car_model_router import car_model_router
 from patrocars.routers.manufacturer_router import manufacturer_router
 
 app = FastAPI(
@@ -14,6 +15,7 @@ app = FastAPI(
 
 
 app.include_router(manufacturer_router)
+app.include_router(car_model_router)
 
 
 @app.exception_handler(SQLAlchemyError)

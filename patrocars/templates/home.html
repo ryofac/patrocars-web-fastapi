@@ -1,11 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h2>Montadoras Disponíveis:</h2>
+<ul>
+  <table class="table">
+    <thead></thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">País</th>
+      <th scope="col">Ano de Fundação</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% for montadora in manufacturers %}
+      <tr>
+        <th scope="row">{{loop.index}}</th>
+        <td><a href="{{ url_for('manufacturer_detail', m_id=montadora.id) }}">{{montadora.name}}</a></td>
+        <td>{{montadora.country}}</td>
+        <td>{{montadora.foundation_year}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
   <a href="{{ url_for('create_manufacturer') }}">Cadastrar nova montadora</a>
-  <h2>Montadoras Disponíveis:</h2>
-  <ul>
-    {% for montadora in manufacturers %}
-      <li>{{ montadora.name }} - {{ montadora.foundation_year }}</li>
-    {% endfor %}
-  </ul>
+</ul>
 {% endblock %}

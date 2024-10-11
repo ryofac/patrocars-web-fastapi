@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Novo modelo de carro
+{% endblock %}
+
+{% block page_title %}
+Novo modelo de carro para a montadora {{montadora.name}}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <form action="/montadoras/criar/processar_form" method="post" class="form">
+    {% from 'components/form_group.html' import form_group %}
+
+    {{ form_group('Nome do modelo', 'name', 'text') }}
+    {{ form_group('Valor de referência', 'reference_value', 'number') }}
+    {{ form_group('Motorização', 'motorization', 'number') }}
+    {{ form_group('Descrição', 'description', 'text') }}
+
+    <div class="form-check mb-3">
+      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="is_automatic">
+      <label class="form-check-label" for="flexCheckDefault">
+        É automático?
+      </label>
+    </div>
+
+    <input type="submit" value="Criar Montadora" class="btn btn-primary" />
+  </form>
+</div>
+{% endblock %}

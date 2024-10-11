@@ -26,19 +26,19 @@
 </head>
 
 <body>
-  <main class="container mt-5">
+  <main class="container mt-5 flex-grow-1">
     <div class="row">
       <div class="col-12">
         <h1 class="text-center">
           {% block page_title %}
-          Seu software patro-maravilhoso!
+          <a href="/home" style="text-decoration:none;color:black">PatroCars: Seu software patro-maravilhoso!</a>
           {% endblock %}
         </h1>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-12">
+      <div class="col-12 mt-5">
         {% block content %}
         {% endblock %}
       </div>

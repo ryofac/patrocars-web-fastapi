@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Montadora {{montadora.name}}
+{% endblock %}
+
+{% block page_title %}
+Montadora {{montadora.name}}
+{% endblock %}
+
+{% block content %}
+<h2> Modelos de carro fabricados por essa montadora: </h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Preço de Referência</th>
+      <th scope="col">Motorização</th>
+      <th scope="col">É automático?</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for car_model in montadora.car_models %}
+    <tr>
+      <th scope="row">{{loop.index}}</th>
+      <td>{{car_model.name}}</td>
+      <td>{{car_model.reference_value}}</td>
+      <td>{{car_model.motorization}}</td>
+      <td>{{car_model.is_automatic}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="{{ url_for('car_model_form', manufacturer_id=montadora.id) }}">Adicionar novo modelo de carro</a>
+{% endblock %}
