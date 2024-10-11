@@ -10,7 +10,7 @@ Novo modelo de carro para a montadora {{montadora.name}}
 
 {% block content %}
 <div class="container">
-  <form action="/montadoras/criar/processar_form" method="post" class="form">
+  <form action="{{url_for('car_model_process_form', manufacturer_id=montadora.id)}}" method="post" class="form">
     {% from 'components/form_group.html' import form_group %}
 
     {{ form_group('Nome do modelo', 'name', 'text') }}
@@ -19,7 +19,7 @@ Novo modelo de carro para a montadora {{montadora.name}}
     {{ form_group('Descrição', 'description', 'text') }}
 
     <div class="form-check mb-3">
-      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="is_automatic">
+      <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="is_automatic" value="is_automatic">
       <label class="form-check-label" for="flexCheckDefault">
         É automático?
       </label>

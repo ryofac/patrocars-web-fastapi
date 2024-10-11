@@ -8,4 +8,8 @@ class ManufacturerInput(BaseModel):
 
 
 class CarModelInput(BaseModel):
-    pass
+    name: str
+    reference_value: float
+    motorization: float
+    description: str
+    is_automatic: str | None

@@ -30,3 +30,8 @@ class CarModelRepository:
     def get_all(self):
         stmt = select(CarModel)
         return self.session.scalars(stmt).all()
+
+    def create_car_model(self, new_car_model: CarModel):
+        self.session.add(new_car_model)
+        self.session.commit()
+        self.session.refresh(new_car_model)
