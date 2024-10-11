@@ -1,5 +1,5 @@
 import uuid
-from datetime import date, datetime
+from datetime import datetime
 from decimal import Decimal
 
 from sqlalchemy import ForeignKey, func, types
@@ -29,8 +29,15 @@ class UUIDModel(Base):
 
 class TimestampMixin(Base):
     __abstract__ = True
-    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
-    updated_at: Mapped[datetime] = mapped_column(onupdate=func.now())
+    created_at: Mapped[datetime] = mapped_column(
+        server_default=func.now(),
+        init=False,
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        onupdate=func.now(),
+        init=False,
+        nullable=True,
+    )
 
 
 class CarModel(TimestampMixin, UUIDModel):
@@ -50,9 +57,14 @@ class CarModel(TimestampMixin, UUIDModel):
     manufacturer: Mapped["Manufacturer"] = relationship(
         "Manufacturer",
         back_populates="car_models",
+        init=False,
     )
 
-    cars: Mapped[list["Car"]] = relationship("Car", back_populates="car_model")
+    cars: Mapped[list["Car"]] = relationship(
+        "Car",
+        back_populates="car_model",
+        init=False,
+    )
 
 
 class Car(TimestampMixin, UUIDModel):
@@ -75,4 +87,5 @@ class Manufacturer(TimestampMixin, UUIDModel):
     car_models: Mapped[list["CarModel"]] = relationship(
         "CarModel",
         back_populates="manufacturer",
+        init=False,
     )
