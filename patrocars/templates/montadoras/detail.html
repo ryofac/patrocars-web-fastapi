@@ -27,7 +27,8 @@ Montadora {{montadora.name}}
       <td>{{car_model.name}}</td>
       <td>{{car_model.reference_value}}</td>
       <td>{{car_model.motorization}}</td>
-      <td>{{car_model.is_automatic}}</td>
+      <td>{{"Sim" if car_model.is_automatic else "Não"}}</td>
+      <td> <a href="{{ url_for('car_model_delete', car_model_id=car_model.id) }}"> Excluir </a> </td>
     </tr>
     {% endfor %}
   </tbody>

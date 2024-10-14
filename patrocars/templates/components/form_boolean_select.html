@@ -1,0 +1,8 @@
+{% macro form_boolean_select(label, name) %}
+
+<label for="{{ name }}">{{ label }}</label>
+<select class="form-select" aria-label="{{label}}" name="{{name}}">
+  <option value="true">Sim</option>
+  <option value="false">Não</option>
+</select>
+{% endmacro %}

@@ -44,8 +44,8 @@ class CarModel(TimestampMixin, UUIDModel):
     __tablename__ = "car_model"
 
     name: Mapped[str] = mapped_column(types.String(100))
-    reference_value: Mapped[Decimal] = mapped_column(types.DECIMAL(2))
-    motorization: Mapped[float] = mapped_column(types.Float(1))
+    reference_value: Mapped[Decimal] = mapped_column(types.DECIMAL(precision=10, scale=2))
+    motorization: Mapped[float] = mapped_column(types.Float())
     is_automatic: Mapped[bool]
     description: Mapped[str] = mapped_column(types.String(255), nullable=True)
 

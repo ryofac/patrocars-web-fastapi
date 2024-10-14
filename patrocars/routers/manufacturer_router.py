@@ -6,9 +6,9 @@ from fastapi.exceptions import HTTPException
 from fastapi.responses import RedirectResponse
 from fastapi.routing import APIRouter
 
-from patrocars.dependencies import get_car_model_repository, get_manufacturer_repository, templates
+from patrocars.dependencies import get_manufacturer_repository, templates
 from patrocars.models import Manufacturer
-from patrocars.persistence.repositories import CarModelRepository, ManufacturerRepository
+from patrocars.persistence.repositories import ManufacturerRepository
 from patrocars.schemas import ManufacturerInput
 
 manufacturer_router = APIRouter(prefix="/montadoras")
@@ -27,7 +27,10 @@ def process_manufacturer_form(
 ):
     new_manufacturer = Manufacturer(**manufacturer_in.model_dump())
     manufactory_repository.create_manufacturer(new_manufacturer)
-    return RedirectResponse(manufacturer_router.url_path_for("create_manufacturer"), status_code=303)
+    return RedirectResponse(
+        url="/home",
+        status_code=303,
+    )
 
 
 @manufacturer_router.get("/{m_id}")

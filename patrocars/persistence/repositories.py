@@ -31,7 +31,16 @@ class CarModelRepository:
         stmt = select(CarModel)
         return self.session.scalars(stmt).all()
 
+    def get_by_id(self, cm_id: str):
+        stmt = select(CarModel).where(CarModel.id == cm_id)
+        return self.session.scalar(stmt)
+
     def create_car_model(self, new_car_model: CarModel):
         self.session.add(new_car_model)
         self.session.commit()
         self.session.refresh(new_car_model)
+
+    def delete_car_model(self, car_model_id: str):
+        to_be_deleted = self.get_by_id(car_model_id)
+        self.session.delete(to_be_deleted)
+        self.session.commit()
