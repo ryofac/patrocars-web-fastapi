@@ -15,7 +15,7 @@ Este projeto tem como objetivo simular uma experiência de desenvolvimento de si
 
 - **Banco de Dados Relacional**: PostgreSQL.
 - Persistência de dados pode ser feita diretamente ou através de uma biblioteca ou ORM à sua escolha.
-- Deploy está sendo realizado na plataforma PythonAnywhere.
+- Deploy está sendo realizado na plataforma Render.
 
 ## Instruções para Execução
 
