@@ -10,7 +10,7 @@ Editar montadora {{montadora.name}}
 
 {% block content %}
 <div class="container">
-  <form action="/montadoras/editar/processar_form" method="post" class="form">
+  <form action="/montadoras/editar/{{montadora.id}}/processar_form" method="post" class="form">
     {% from 'components/form_group.html' import form_group %}
 
     {{ form_group('Nome da Montadora', 'name', 'text', montadora.name) }}
