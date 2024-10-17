@@ -40,6 +40,15 @@ class CarModelRepository:
         self.session.commit()
         self.session.refresh(new_car_model)
 
+    def edit_car_model(self, old_car_model: CarModel, new_car_model: CarModel):
+        old_car_model.description = new_car_model.description
+        old_car_model.name = new_car_model.name
+        old_car_model.is_automatic = new_car_model.is_automatic
+        old_car_model.reference_value = new_car_model.reference_value
+        self.session.commit()
+        self.session.refresh(old_car_model)
+        return old_car_model
+
     def delete_car_model(self, car_model_id: str):
         to_be_deleted = self.get_by_id(car_model_id)
         self.session.delete(to_be_deleted)

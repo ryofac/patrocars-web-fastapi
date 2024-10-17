@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+Editar modelo {{modelo_carro.name}}
+{% endblock %}
+
+{% block page_title %}
+Edite o modelo {{modelo_carro.name}}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <form action="{{url_for('car_model_process_update_form', car_model_id=modelo_carro.id)}}" method="post" class="form">
+    {% from 'components/form_group.html' import form_group %}
+    {% from 'components/form_boolean_select.html' import form_boolean_select %}
+
+    {{ form_group('Nome do modelo', 'name', 'text', modelo_carro.name) }}
+    {{ form_group('Valor de referência', 'reference_value', 'number', modelo_carro.reference_value) }}
+    {{ form_group('Motorização', 'motorization', 'number', modelo_carro.motorization )}}
+    {{ form_group('Descrição', 'description', 'text', modelo_carro.description )}}
+    {{ form_boolean_select("É automático?", "is_automatic", modelo_carro.is_automatic)}}
+    <input type="submit" value="Editar Montadora" class="btn btn-primary mt-2" />
+  </form>
+</div>
+{% endblock %}

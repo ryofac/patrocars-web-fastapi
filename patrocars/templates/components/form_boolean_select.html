@@ -1,8 +1,8 @@
-{% macro form_boolean_select(label, name) %}
+{% macro form_boolean_select(label, name, value) %}
 
 <label for="{{ name }}">{{ label }}</label>
 <select class="form-select" aria-label="{{label}}" name="{{name}}">
-  <option value="true">Sim</option>
-  <option value="false">Não</option>
+  <option value="true" {% if value is true %}selected{% endif %}>Sim</option>
+  <option value="false" {% if value is false %}selected{% endif %}>Não</option>
 </select>
 {% endmacro %}

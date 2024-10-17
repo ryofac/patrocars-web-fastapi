@@ -1,29 +1,43 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Montadoras Disponíveis:</h2>
-<ul>
-  <table class="table">
-    <thead></thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nome</th>
-      <th scope="col">País</th>
-      <th scope="col">Ano de Fundação</th>
-    </tr>
-    </thead>
-    <tbody>
-      {% for montadora in manufacturers %}
-      <tr>
-        <th scope="row">{{loop.index}}</th>
-        <td><a href="{{ url_for('manufacturer_detail', m_id=montadora.id) }}">{{montadora.name}}</a></td>
-        <td>{{montadora.country}}</td>
-        <td>{{montadora.foundation_year}}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<div class="container d-flex flex-column flex-grow-0 h-100">
 
-  <a href="{{ url_for('create_manufacturer') }}">Cadastrar nova montadora</a>
-</ul>
+  <h2 class="align-self-center ">Montadoras Disponíveis:</h2>
+  <div class="table-responsive col mt-3 " style="min-height: 300px;max-height: 70%; overflow-y: auto;">
+    <table class="table">
+      <thead></thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nome</th>
+        <th scope="col">País</th>
+        <th scope="col">Ano de Fundação</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+        {% for montadora in manufacturers %}
+        <tr>
+          <th scope="row">{{loop.index}}</th>
+          <td><a style="text-decoration:none;"
+              href="{{ url_for('manufacturer_detail', m_id=montadora.id) }}">{{montadora.name}}</a></td>
+          <td>{{montadora.country}}</td>
+          <td>{{montadora.foundation_year}}</td>
+          <td>
+            <a class="btn btn-sm btn-secondary" href="">
+              Editar
+            </a>
+            <a class="btn btn-sm btn-danger" href="">
+              Excluir </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="d-flex justify-content-between"><a class="btn btn-primary"
+    href="{{ url_for('create_manufacturer') }}">Cadastrar nova montadora</a></div>
+
 {% endblock %}

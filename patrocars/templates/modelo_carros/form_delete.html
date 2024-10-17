@@ -9,9 +9,18 @@ Excluir {{modelo_carro.name}}
 {% endblock %}
 
 {% block content %}
-<form action="{{url_for('car_model_process_delete', car_model_id=modelo_carro.id)}}" method="post">
-  <input type="hidden" name="_method" value="delete">
-  <h2>Tem certeza que deseja excluir o modelo de carro {{modelo_carro.name}}?</h2>
-  <button class="btn btn-primary" type="submit">Excluir</button>
-</form>
+<div class="container d-flex">
+  <form action="{{url_for('car_model_process_delete', car_model_id=modelo_carro.id)}}" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <h2>Tem certeza que deseja excluir o modelo de carro {{modelo_carro.name}}?</h2>
+
+    <div class="align-self-center">
+      <button class="btn btn-danger" type="submit">Excluir</button>
+      <a href="{{url_for('manufacturer_detail', m_id=modelo_carro.manufacturer_id)}}" class="btn btn-secondary">
+        Cancelar
+      </a>
+    </div>
+    
+  </form>
+</div>
 {% endblock content %}

@@ -74,3 +74,42 @@ def car_model_process_delete(
         manufacturer_router.url_path_for("manufacturer_detail", m_id=manufacturer_id),
         status_code=301,
     )
+
+
+@car_model_router.get("/atualizar/{car_model_id}")
+def car_model_update_form(
+    request: Request,
+    car_model_id: str,
+    car_model_repository: CarModelRepository = Depends(get_car_model_repository),
+):
+    existent_car_model = car_model_repository.get_by_id(car_model_id)
+    if not existent_car_model:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Car model not found!")
+
+    return templates.TemplateResponse(request, "modelo_carros/form_update.html", {"modelo_carro": existent_car_model})
+
+
+@car_model_router.post("/editar/{car_model_id}/processar_form")
+def car_model_process_update_form(
+    request: Request,
+    car_model_id: str,
+    new_car_model: Annotated[CarModelInput, Form()],
+    car_model_repository: CarModelRepository = Depends(get_car_model_repository),
+):
+    existent_car_model = car_model_repository.get_by_id(car_model_id)
+    if not existent_car_model:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Car model not found!")
+
+    new_car_is_automatic = True if new_car_model.is_automatic.lower() == "true" else False
+
+    new_car_model: CarModel = CarModel(
+        **new_car_model.model_dump(exclude="is_automatic"),
+        manufacturer_id=existent_car_model.manufacturer_id,
+        is_automatic=new_car_is_automatic,
+    )
+    car_model_repository.edit_car_model(existent_car_model, new_car_model)
+
+    return RedirectResponse(
+        manufacturer_router.url_path_for("manufacturer_detail", m_id=existent_car_model.manufacturer_id),
+        status_code=status.HTTP_303_SEE_OTHER,
+    )
