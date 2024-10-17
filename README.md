@@ -30,6 +30,9 @@ Este projeto tem como objetivo simular uma experiência de desenvolvimento de si
 
 ## Proximos Passos:
 - Implementação do relacionamento entre modelos de carro e carros
+- Implementação de validação de formulário
+- Melhorias visuais
 
 ## Deploy
 O deploy do sistema está sendo realizado na plataforma Render, com PostgreSQL configurado para o banco de dados.
+- Link: https://patrocars-web-fastapi.onrender.com
