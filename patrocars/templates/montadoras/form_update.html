@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Editar Montadora {{montadora.name}}
+{% endblock %}
+
+{% block page_title %}
+Editar montadora {{montadora.name}}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <form action="/montadoras/editar/processar_form" method="post" class="form">
+    {% from 'components/form_group.html' import form_group %}
+
+    {{ form_group('Nome da Montadora', 'name', 'text', montadora.name) }}
+    {{ form_group('País da Montadora', 'country', 'text', montadora.country) }}
+    {{ form_group('Ano de Fundação da Montadora', 'foundation_year', 'number', montadora.foundation_year ) }}
+
+    <input type="submit" value="Editar Montadora" class="btn btn-primary mb-5" />
+  </form>
+</div>
+{% endblock %}

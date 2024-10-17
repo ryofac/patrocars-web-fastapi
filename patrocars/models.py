@@ -50,7 +50,7 @@ class CarModel(TimestampMixin, UUIDModel):
     description: Mapped[str] = mapped_column(types.String(255), nullable=True)
 
     manufacturer_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("manufacturer.id"),
+        ForeignKey("manufacturer.id", ondelete="CASCADE"),
         nullable=False,
     )
 
@@ -88,4 +88,5 @@ class Manufacturer(TimestampMixin, UUIDModel):
         "CarModel",
         back_populates="manufacturer",
         init=False,
+        cascade="all, delete-orphan",
     )

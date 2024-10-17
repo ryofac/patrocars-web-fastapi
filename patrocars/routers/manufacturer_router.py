@@ -43,3 +43,71 @@ def manufacturer_detail(
     if not manufacturer:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Manufacturer with this id not found")
     return templates.TemplateResponse(request, "montadoras/detail.html", context={"montadora": manufacturer})
+
+
+@manufacturer_router.get("/editar/{m_id}/")
+def manufacturer_update(
+    m_id: str,
+    request: Request,
+    manufacturer_repository: ManufacturerRepository = Depends(get_manufacturer_repository),
+):
+    manufacturer = manufacturer_repository.get_by_id(m_id)
+    if not manufacturer:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Manufacturer with this id not found")
+    return templates.TemplateResponse(request, "montadoras/form_update.html", context={"montadora": manufacturer})
+
+
+@manufacturer_router.post("/editar/{m_id}/processar_form")
+def manufacturer_process_update(
+    m_id: str,
+    request: Request,
+    new_manufacturer: Annotated[ManufacturerInput, Form()],
+    manufacturer_repository: ManufacturerRepository = Depends(get_manufacturer_repository),
+):
+    old_manufacturer = manufacturer_repository.get_by_id(m_id)
+    if not old_manufacturer:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Manufacturer with this id not found")
+
+    manufacturer_repository.edit_manufacturer(old_manufacturer, new_manufacturer)
+
+    return RedirectResponse(
+        url="/home",
+        status_code=303,
+    )
+
+
+@manufacturer_router.get("/deletar/{m_id}")
+def manufacturer_delete(
+    m_id: str,
+    request: Request,
+    manufacturer_repository: ManufacturerRepository = Depends(get_manufacturer_repository),
+):
+    manufacturer = manufacturer_repository.get_by_id(m_id)
+    if not manufacturer:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Manufacturer with this id not found")
+
+    car_model_amount = len(manufacturer.car_models)
+
+    return templates.TemplateResponse(
+        request,
+        "montadoras/form_delete.html",
+        context={"montadora": manufacturer, "quantidade_carros": car_model_amount},
+    )
+
+
+@manufacturer_router.post("/deletar/{m_id}/processar_form")
+def manufacturer_process_delete(
+    m_id: str,
+    request: Request,
+    manufacturer_repository: ManufacturerRepository = Depends(get_manufacturer_repository),
+):
+    old_manufacturer = manufacturer_repository.get_by_id(m_id)
+    if not old_manufacturer:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Manufacturer with this id not found")
+
+    manufacturer_repository.delete_manufacturer(m_id)
+
+    return RedirectResponse(
+        url="/home",
+        status_code=303,
+    )

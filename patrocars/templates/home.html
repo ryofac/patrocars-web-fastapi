@@ -12,6 +12,7 @@
         <th scope="col">Nome</th>
         <th scope="col">País</th>
         <th scope="col">Ano de Fundação</th>
+        <th scope="col">Quantidade de Modelos Registrados</th>
         <th scope="col"></th>
       </tr>
       </thead>
@@ -23,11 +24,12 @@
               href="{{ url_for('manufacturer_detail', m_id=montadora.id) }}">{{montadora.name}}</a></td>
           <td>{{montadora.country}}</td>
           <td>{{montadora.foundation_year}}</td>
+          <td>{{montadora.car_models|length}}</td>
           <td>
-            <a class="btn btn-sm btn-secondary" href="">
+            <a class="btn btn-sm btn-secondary" href="{{ url_for('manufacturer_update', m_id=montadora.id) }}">
               Editar
             </a>
-            <a class="btn btn-sm btn-danger" href="">
+            <a class="btn btn-sm btn-danger" href="{{ url_for('manufacturer_delete', m_id=montadora.id) }}">
               Excluir </a>
           </td>
         </tr>

@@ -1,26 +1,28 @@
 {% extends "base.html" %}
 
 {% block title %}
-Excluir {{modelo_carro.name}}
+Excluir {{montadora.name}}
 {% endblock %}
 
 {% block page_title %}
-Excluir {{modelo_carro.name}}
+Excluir {{montadora.name}}
 {% endblock %}
 
 {% block content %}
 <div class="container d-flex">
-  <form action="{{url_for('car_model_process_delete', car_model_id=modelo_carro.id)}}" method="post">
+  <form action="{{url_for('manufacturer_process_delete', m_id=montadora.id)}}" method="post">
     <input type="hidden" name="_method" value="delete">
-    <h2>Tem certeza que deseja excluir o modelo de carro {{modelo_carro.name}}?</h2>
-
     <div class="align-self-center">
+      <h2>Tem certeza que deseja excluir a Montadora {{montadora.name}}?</h2>
+      <h3>Excluirá junto {{quantidade_carros}} modelos de carro!</h3>
       <button class="btn btn-danger" type="submit">Excluir</button>
-      <a href="{{url_for('manufacturer_detail', m_id=modelo_carro.manufacturer_id)}}" class="btn btn-secondary">
+      <a href="{{url_for('home')}}" class="btn btn-secondary">
         Cancelar
       </a>
     </div>
-
   </form>
+</div>
+
+</form>
 </div>
 {% endblock content %}

@@ -22,6 +22,22 @@ class ManufacturerRepository:
         self.session.refresh(new_manufacturer)
         return new_manufacturer
 
+    def edit_manufacturer(self, old_manufacturer: Manufacturer, new_manufacturer: Manufacturer):
+        old_manufacturer.name = new_manufacturer.name
+        old_manufacturer.country = new_manufacturer.country
+        old_manufacturer.foundation_year = new_manufacturer.foundation_year
+        self.session.add(old_manufacturer)
+        self.session.commit()
+        self.session.refresh(old_manufacturer)
+        return old_manufacturer
+
+    def delete_manufacturer(self, manufacturer_id: Manufacturer):
+        to_be_deleted = self.get_by_id(manufacturer_id)
+        if not to_be_deleted:
+            raise ValueError("Not Found")
+        self.session.delete(to_be_deleted)
+        self.session.commit()
+
 
 class CarModelRepository:
     def __init__(self, session: Session) -> None:
@@ -51,5 +67,7 @@ class CarModelRepository:
 
     def delete_car_model(self, car_model_id: str):
         to_be_deleted = self.get_by_id(car_model_id)
+        if not to_be_deleted:
+            raise ValueError("Not Found")
         self.session.delete(to_be_deleted)
         self.session.commit()
